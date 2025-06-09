@@ -1,0 +1,27 @@
+title: "AIナレッジ共有サイト"
+description: "ChatWorkのAI関連ナレッジを整理・共有するサイト"
+url: "https://subscription-VEXUM.github.io"
+baseurl: "/chatwork-knowledge-site"
+
+# Jekyll設定
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# カスタム設定
+markdown: kramdown
+highlighter: rouge
+permalink: /:categories/:title/
+
+# ナビゲーション
+navigation:
+  - title: "ホーム"
+    url: "/"
+  - title: "タグ一覧"
+    url: "/tags"
+  - title: "検索"
+    url: "/search"
+
+# SNS設定
+github_username: subscription-VEXUM
