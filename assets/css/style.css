@@ -1,50 +1,58 @@
-/* AIナレッジ共有サイト カスタムCSS */
+/* ChatWorkライク AIナレッジ共有サイト */
 
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --accent-color: #3b82f6;
-  --bg-color: #f8fafc;
-  --text-color: #1e293b;
-  --border-color: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --chatwork-green: #00C300;
+  --chatwork-green-dark: #00A000;
+  --chatwork-green-light: #E8F5E8;
+  --chatwork-blue: #1E88E5;
+  --chatwork-gray: #F5F5F5;
+  --chatwork-border: #E0E0E0;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --radius: 8px;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
-  background: var(--bg-color);
+  background: #FAFAFA;
+  margin: 0;
+  padding: 0;
 }
 
-/* ヘッダー */
+/* ChatWorkライクなヘッダー */
 .site-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: var(--chatwork-green);
   color: white;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow);
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .site-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 600;
   margin: 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .site-description {
   text-align: center;
   margin-top: 0.5rem;
   opacity: 0.9;
+  font-size: 0.9rem;
 }
 
-/* ナビゲーション */
+/* ChatWorkライクなナビゲーション */
 .navigation {
   background: white;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--chatwork-border);
+  padding: 0.5rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -53,222 +61,334 @@ body {
 .nav-list {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.nav-item {
+  margin: 0 0.25rem;
+}
+
 .nav-item a {
-  color: var(--text-color);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
   transition: all 0.2s;
+  display: block;
+  font-size: 0.9rem;
 }
 
-.nav-item a:hover {
-  background: var(--accent-color);
-  color: white;
+.nav-item a:hover, .nav-item a.active {
+  background: var(--chatwork-green-light);
+  color: var(--chatwork-green-dark);
 }
 
-/* 統計カード */
+/* 統計カード - ChatWorkスタイル */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
 }
 
 .stat-card {
   background: white;
-  padding: 2rem;
-  border-radius: 12px;
+  padding: 1.5rem;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   text-align: center;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--chatwork-border);
   transition: transform 0.2s;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .stat-number {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--chatwork-green);
   margin: 0;
 }
 
 .stat-label {
-  color: #64748b;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
+  font-size: 0.9rem;
 }
 
-/* タグクラウド */
+/* ChatWorkライクなタグクラウド */
 .tag-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 2rem 0;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
 }
 
 .tag-item {
-  background: var(--accent-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  background: var(--chatwork-green-light);
+  color: var(--chatwork-green-dark);
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  border: 1px solid var(--chatwork-green);
 }
 
 .tag-item:hover {
-  background: var(--secondary-color);
+  background: var(--chatwork-green);
+  color: white;
   transform: scale(1.05);
 }
 
 .tag-count {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.2rem 0.5rem;
-  border-radius: 10px;
-  font-size: 0.8rem;
+  background: var(--chatwork-green);
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-/* 投稿カード */
+.tag-item:hover .tag-count {
+  background: white;
+  color: var(--chatwork-green);
+}
+
+/* ChatWorkライクな投稿カード */
 .post-grid {
   display: grid;
-  gap: 1.5rem;
-  margin: 2rem 0;
+  gap: 1rem;
+  margin: 1.5rem 0;
 }
 
 .post-card {
   background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--chatwork-border);
+  overflow: hidden;
   transition: all 0.2s;
 }
 
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
-.post-meta {
+.post-header {
+  background: var(--chatwork-gray);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--chatwork-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  color: #64748b;
-  font-size: 0.9rem;
 }
 
 .post-author {
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--chatwork-green-dark);
+  font-size: 0.9rem;
+}
+
+.post-date {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.post-content {
+  padding: 1rem;
 }
 
 .post-summary {
-  margin: 1rem 0;
-  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.post-original {
+  background: var(--chatwork-gray);
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  margin: 1rem 0;
+  border-left: 3px solid var(--chatwork-green);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.post-original-expanded {
+  max-height: none;
 }
 
 .post-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
   margin-top: 1rem;
 }
 
 .tag {
-  background: #f1f5f9;
-  color: var(--text-color);
-  padding: 0.25rem 0.75rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
+  background: var(--chatwork-green-light);
+  color: var(--chatwork-green-dark);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
-/* 検索ボックス */
+/* URL自動リンク化スタイル */
+.auto-link {
+  color: var(--chatwork-blue);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: inline-block;
+  margin: 0.1rem;
+}
+
+.auto-link:hover {
+  background: var(--chatwork-blue);
+  color: white;
+  text-decoration: none;
+}
+
+.auto-link::before {
+  content: '🔗 ';
+  margin-right: 0.2rem;
+}
+
+/* 展開ボタン */
+.expand-btn {
+  background: none;
+  border: none;
+  color: var(--chatwork-green);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.expand-btn:hover {
+  background: var(--chatwork-green-light);
+}
+
+/* 検索ボックス - ChatWorkスタイル */
 .search-container {
   background: white;
-  padding: 2rem;
-  border-radius: 12px;
+  padding: 1.5rem;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  margin: 2rem 0;
+  margin: 1.5rem 0;
+  border: 1px solid var(--chatwork-border);
 }
 
-.search-box {
+.search-box, select {
   width: 100%;
-  padding: 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1.1rem;
+  padding: 0.75rem;
+  border: 2px solid var(--chatwork-border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
   transition: border-color 0.2s;
+  font-family: inherit;
 }
 
-.search-box:focus {
+.search-box:focus, select:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border-color: var(--chatwork-green);
 }
 
-.search-results {
-  margin-top: 1rem;
+/* ボタンスタイル */
+.btn-primary {
+  background: var(--chatwork-green);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--chatwork-green-dark);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--chatwork-green);
+  border: 2px solid var(--chatwork-green);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background: var(--chatwork-green);
+  color: white;
 }
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
   .site-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .nav-list {
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
   }
   
   .stats-grid {
     grid-template-columns: 1fr;
   }
   
-  .post-meta {
+  .post-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .container {
+    padding: 0 0.5rem;
   }
 }
 
-/* ダークモード対応 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #0f172a;
-    --text-color: #f8fafc;
-    --border-color: #334155;
-  }
-  
-  .stat-card, .post-card, .search-container {
-    background: #1e293b;
-  }
-  
-  .navigation {
-    background: #1e293b;
-  }
+/* コンテナ */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 /* アニメーション */
-@keyframes fadeInUp {
+@keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -277,11 +397,67 @@ body {
 }
 
 .post-card {
-  animation: fadeInUp 0.5s ease-out;
+  animation: slideInUp 0.3s ease-out;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+/* ChatWorkライクなモーダル */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: var(--radius);
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background: var(--chatwork-green);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.no-results h3 {
+  color: var(--chatwork-green);
 }
