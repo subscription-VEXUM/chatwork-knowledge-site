@@ -1,4 +1,4 @@
-// AIナレッジ共有サイト 検索機能
+// ChatWorkライク AIナレッジ共有サイト 検索機能
 
 class KnowledgeSearch {
   constructor() {
@@ -86,6 +86,8 @@ class KnowledgeSearch {
 
     if (resultCount) {
       resultCount.textContent = this.filteredPosts.length + '件の投稿';
+      resultCount.style.color = '#00C300';
+      resultCount.style.fontWeight = '600';
     }
 
     if (this.filteredPosts.length === 0) {
@@ -94,66 +96,53 @@ class KnowledgeSearch {
     }
 
     resultsContainer.innerHTML = this.filteredPosts
-      .map(post => this.renderPostCard(post))
+      .map(post => this.renderChatWorkPostCard(post))
       .join('');
   }
 
-  renderPostCard(post) {
+  renderChatWorkPostCard(post) {
     const tags = this.extractTags(post.tags);
-    const postId = post.date + '-' + post.author;
+    const linkedMessage = this.convertUrlsToLinks(post.message);
+    const isLongMessage = post.message.length > 300;
+    const shortMessage = isLongMessage ? post.message.substring(0, 300) + '...' : post.message;
+    const cardId = 'card-' + post.date + '-' + post.author.replace(/\s+/g, '');
     
-    return '<div class="post-card" data-post-id="' + postId + '">' +
-      '<div class="post-meta">' +
-        '<span class="post-author">' + post.author + '</span>' +
-        '<span class="post-date">' + post.date + '</span>' +
+    return '<div class="post-card">' +
+      '<div class="post-header">' +
+        '<span class="post-author">👤 ' + post.author + '</span>' +
+        '<span class="post-date">📅 ' + post.date + '</span>' +
       '</div>' +
-      '<div class="post-summary">' + post.summary + '</div>' +
-      '<div class="post-tags">' +
-        tags.map(tag => '<span class="tag">' + tag + '</span>').join('') +
-      '</div>' +
-      '<div class="post-actions">' +
-        '<button onclick="knowledgeSearch.showFullMessage(\'' + post.date + '\', \'' + post.author + '\')" class="btn-secondary">' +
-          '📄 全文表示' +
-        '</button>' +
+      '<div class="post-content">' +
+        '<div class="post-summary">📝 ' + post.summary + '</div>' +
+        '<div class="post-original ' + (isLongMessage ? '' : 'post-original-expanded') + '" id="' + cardId + '">' +
+          this.convertUrlsToLinks(shortMessage) +
+        '</div>' +
+        (isLongMessage ? '<button class="expand-btn" onclick="toggleExpand(\'' + cardId + '\', \'' + this.escapeForJs(linkedMessage) + '\')">📖 全文を表示</button>' : '') +
+        '<div class="post-tags">' +
+          tags.map(tag => '<span class="tag">' + tag + '</span>').join('') +
+        '</div>' +
       '</div>' +
     '</div>';
+  }
+
+  convertUrlsToLinks(text) {
+    if (!text) return '';
+    const urlPattern = /(https?:\/\/[^\s\n\r]+)/g;
+    return text.replace(urlPattern, '<a href="$1" target="_blank" class="auto-link">$1</a>');
+  }
+
+  escapeForJs(text) {
+    return text
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '\\"')
+      .replace(/\n/g, '\\n')
+      .replace(/\r/g, '\\r');
   }
 
   extractTags(tagString) {
     if (!tagString) return [];
     return tagString.match(/#[^\s#]+/g) || [];
-  }
-
-  showFullMessage(date, author) {
-    const post = this.posts.find(p => p.date === date && p.author === author);
-    if (!post) return;
-
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.innerHTML = '<div class="modal-content">' +
-      '<div class="modal-header">' +
-        '<h3>' + post.author + ' - ' + post.date + '</h3>' +
-        '<button onclick="this.closest(\'.modal-overlay\').remove()" class="close-btn">✕</button>' +
-      '</div>' +
-      '<div class="modal-body">' +
-        '<h4>📋 要約</h4>' +
-        '<p>' + post.summary + '</p>' +
-        '<h4>📝 元メッセージ</h4>' +
-        '<div class="original-message">' + post.message.replace(/\n/g, '<br>') + '</div>' +
-        '<h4>🏷️ タグ</h4>' +
-        '<div class="post-tags">' +
-          this.extractTags(post.tags).map(tag => '<span class="tag">' + tag + '</span>').join('') +
-        '</div>' +
-      '</div>' +
-    '</div>';
-
-    document.body.appendChild(modal);
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.remove();
-      }
-    });
   }
 
   initializeFilters() {
@@ -164,14 +153,33 @@ class KnowledgeSearch {
     const authorFilter = document.getElementById('authorFilter');
 
     if (tagFilter) {
-      tagFilter.innerHTML = '<option value="">すべてのタグ</option>' +
+      tagFilter.innerHTML = '<option value="">🏷️ すべてのタグ</option>' +
         allTags.map(tag => '<option value="' + tag + '">' + tag + '</option>').join('');
     }
 
     if (authorFilter) {
-      authorFilter.innerHTML = '<option value="">すべての投稿者</option>' +
+      authorFilter.innerHTML = '<option value="">👤 すべての投稿者</option>' +
         allAuthors.map(author => '<option value="' + author + '">' + author + '</option>').join('');
     }
+  }
+}
+
+// 投稿展開/収縮機能
+function toggleExpand(elementId, fullText) {
+  const element = document.getElementById(elementId);
+  const button = element.nextElementSibling;
+  
+  if (element.classList.contains('post-original-expanded')) {
+    // 収縮
+    const shortText = fullText.length > 300 ? fullText.substring(0, 300) + '...' : fullText;
+    element.innerHTML = knowledgeSearch.convertUrlsToLinks(shortText);
+    element.classList.remove('post-original-expanded');
+    button.innerHTML = '📖 全文を表示';
+  } else {
+    // 展開
+    element.innerHTML = knowledgeSearch.convertUrlsToLinks(fullText);
+    element.classList.add('post-original-expanded');
+    button.innerHTML = '📄 短縮表示';
   }
 }
 
@@ -186,10 +194,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 500);
 });
-
-if (!document.querySelector('#modal-styles')) {
-  const modalStyles = document.createElement('style');
-  modalStyles.id = 'modal-styles';
-  modalStyles.textContent = '.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; } .modal-content { background: white; border-radius: 12px; max-width: 800px; max-height: 80vh; overflow-y: auto; margin: 1rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); } .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid #e2e8f0; } .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; border-radius: 6px; } .close-btn:hover { background: #f1f5f9; } .modal-body { padding: 1.5rem; } .original-message { background: #f8fafc; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color); white-space: pre-wrap; font-family: monospace; font-size: 0.9rem; } .post-actions { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; } .btn-secondary { background: #f1f5f9; color: var(--text-color); border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; } .btn-secondary:hover { background: #e2e8f0; } .no-results { text-align: center; padding: 3rem 1rem; color: #64748b; }';
-  document.head.appendChild(modalStyles);
-}
