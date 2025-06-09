@@ -1,0 +1,37 @@
+---
+layout: default
+title: "検索"
+---
+
+<div class="search-container">
+  <h2>🔍 投稿を検索</h2>
+  
+  <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+    <div>
+      <label for="searchBox" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">キーワード検索</label>
+      <input type="text" id="searchBox" class="search-box" placeholder="要約、タグ、投稿者名で検索...">
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <label for="tagFilter" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">タグで絞り込み</label>
+        <select id="tagFilter" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 6px;">
+          <option value="">すべてのタグ</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="authorFilter" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">投稿者で絞り込み</label>
+        <select id="authorFilter" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 6px;">
+          <option value="">すべての投稿者</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div id="resultCount" style="margin-bottom: 1rem; color: #64748b; font-weight: 600;"></div>
+</div>
+
+<div id="searchResults" class="post-grid">
+  <!-- 検索結果がここに表示されます -->
+</div>
