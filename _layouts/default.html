@@ -8,12 +8,40 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hiragino+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    // 投稿展開/収縮機能（グローバル関数として定義）
+    function toggleExpand(elementId, fullText) {
+      const element = document.getElementById(elementId);
+      const button = element.nextElementSibling;
+      
+      if (element.classList.contains('post-original-expanded')) {
+        // 収縮
+        const shortText = fullText.length > 300 ? fullText.substring(0, 300) + '...' : fullText;
+        element.innerHTML = convertUrlsToLinksGlobal(shortText);
+        element.classList.remove('post-original-expanded');
+        button.innerHTML = '📖 全文を表示';
+      } else {
+        // 展開
+        element.innerHTML = convertUrlsToLinksGlobal(fullText);
+        element.classList.add('post-original-expanded');
+        button.innerHTML = '📄 短縮表示';
+      }
+    }
+    
+    // グローバルURL変換関数
+    function convertUrlsToLinksGlobal(text) {
+      if (!text) return '';
+      const urlPattern = /(https?:\/\/[^\s\n\r]+)/g;
+      return text.replace(urlPattern, '<a href="$1" target="_blank" class="auto-link">$1</a>');
+    }
+  </script>
 </head>
 <body>
   <header class="site-header">
     <div class="container">
-      <h1 class="site-title">🤖 {{ site.title }}</h1>
+      <h1 class="site-title">💬 {{ site.title }}</h1>
       <p class="site-description">{{ site.description }}</p>
     </div>
   </header>
@@ -32,9 +60,10 @@
     {{ content }}
   </main>
 
-  <footer style="text-align: center; padding: 2rem; color: #64748b; margin-top: 4rem;">
-    <p>最終更新: 2025/6/9 | 
-    <a href="https://github.com/{{ site.github_username }}/{{ site.baseurl | remove: '/' }}" target="_blank">GitHub</a></p>
+  <footer style="text-align: center; padding: 2rem; color: #666; margin-top: 4rem; border-top: 1px solid #E0E0E0;">
+    <p>💡 最終更新: 2025/6/9 | 
+    <a href="https://github.com/{{ site.github_username }}/{{ site.baseurl | remove: '/' }}" target="_blank" style="color: #00C300;">📊 GitHub</a> | 
+    <span style="color: #00C300;">ChatWork</span>ライクなナレッジ共有サイト</p>
   </footer>
 
   <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
